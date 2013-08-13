@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.beorn.onlinepayment.model.OrderTransaction">
+		<field name="uuid" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="orderId" type="long" />
+		<field name="transactionId" type="long" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.PaymentMethod">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="paymentMethodId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="key" type="String" />
+		<field name="name" type="String" localized="true">
+			<hint name="max-length">255</hint>
+		</field>
+	</model>
+	<model name="com.beorn.onlinepayment.model.PaymentPlugin">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="paymentPluginId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="applicationId" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="name" type="String" localized="true">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="pluginConfigParameters" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="sellerConfigParameters" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="pluginConfig" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="configured" type="boolean" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.PaymentPluginConfig">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="paymentPluginConfigId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sellerId" type="long" />
+		<field name="paymentPluginId" type="long" />
+		<field name="config" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="configured" type="boolean" />
+		<field name="defaultPlugin" type="boolean" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.Rule">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="ruleId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="paymentPluginConfigId" type="long" />
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="priority" type="int" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.Seller">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="sellerId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.Transaction">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="transactionId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="applicationId" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="sellerId" type="long" />
+		<field name="amount" type="double" />
+		<field name="currencyCode" type="String" />
+		<field name="status" type="long" />
+		<field name="paymentApplicationId" type="String" />
+		<field name="amountPaid" type="double" />
+		<field name="amountRefunded" type="double" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.TransactionLog">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="transactionLogId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="transactionId" type="long" />
+		<field name="paymentApplicationId" type="String" />
+		<field name="remoteId" type="String" />
+		<field name="amount" type="double" />
+		<field name="type" type="long" />
+	</model>
+	<model name="com.beorn.onlinepayment.model.TransactionParameter">
+		<field name="uuid" type="String" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="transactionParameterId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="transactionId" type="long" />
+		<field name="key" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="value" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+</model-hints>

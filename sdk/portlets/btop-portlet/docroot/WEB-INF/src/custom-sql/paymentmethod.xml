@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.PaymentMethodFinder.findBySellerId">
+      <![CDATA[
+			SELECT
+				{Payment_PaymentMethod.*}
+			FROM
+				Payment_PaymentPluginConfig,
+				Payment_PaymentPlugin_PaymentMethod,
+				Payment_PaymentMethod
+			WHERE
+				(Payment_PaymentPluginConfig.sellerId = ?) AND
+				(Payment_PaymentPluginConfig.configured = ?) AND
+				(Payment_PaymentPluginConfig.paymentPluginId = Payment_PaymentPlugin_PaymentMethod.paymentPluginId) AND
+				(Payment_PaymentPlugin_PaymentMethod.paymentMethodId = Payment_PaymentMethod.paymentMethodId)
+ 			ORDER BY
+				Payment_PaymentMethod.modifiedDate DESC
+      ]]>
+	</sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.PaymentMethodFinder.countBySellerId">
+      <![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				Payment_PaymentPluginConfig,
+				Payment_PaymentPlugin_PaymentMethod,
+				Payment_PaymentMethod
+			WHERE
+				(Payment_PaymentPluginConfig.sellerId = ?) AND
+				(Payment_PaymentPluginConfig.configured = ?) AND
+				(Payment_PaymentPluginConfig.paymentPluginId = Payment_PaymentPlugin_PaymentMethod.paymentPluginId) AND
+				(Payment_PaymentPlugin_PaymentMethod.paymentMethodId = Payment_PaymentMethod.paymentMethodId)
+      ]]>
+	</sql>
+</custom-sql>

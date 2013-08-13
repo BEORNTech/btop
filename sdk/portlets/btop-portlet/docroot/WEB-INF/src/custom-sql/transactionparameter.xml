@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.TransactionParameterFinder.findParameterKeysForSellerId">
+      <![CDATA[
+			SELECT DISTINCT
+      			Payment_TransactionParameter.key_
+			FROM 
+				Payment_TransactionParameter,
+				Payment_Transaction
+			WHERE
+				(Payment_Transaction.transactionId = Payment_TransactionParameter.transactionId) AND
+				(Payment_Transaction.sellerId = ?)
+      ]]>
+	</sql>
+</custom-sql>

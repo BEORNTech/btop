@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql file="custom-sql/paymentmethod.xml" />
+	<sql file="custom-sql/paymentplugin.xml" />
+	<sql file="custom-sql/rule.xml" />
+	<sql file="custom-sql/transactionparameter.xml" />
+</custom-sql>

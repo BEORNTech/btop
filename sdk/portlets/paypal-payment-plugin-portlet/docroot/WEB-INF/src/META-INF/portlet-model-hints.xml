@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.beorn.paypalpaymentplugin.model.Token">
+		<field name="uuid" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="tokenId" type="String" />
+		<field name="transactionId" type="long" />
+		<field name="status" type="long" />
+	</model>
+</model-hints>

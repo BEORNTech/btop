@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.OrderTransactionModelImpl">
+		<attributes>
+			<id name="orderId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="transactionId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.PaymentMethodModelImpl">
+		<attributes>
+			<id name="paymentMethodId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="key">
+				<column name="KEY_" />
+			</basic>
+			<basic name="name" />
+			<transient name="modelAttributes" />
+			<transient name="nameCurrentLanguageId" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.PaymentPluginModelImpl">
+		<attributes>
+			<id name="paymentPluginId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="applicationId" />
+			<basic name="name" />
+			<basic name="pluginConfigParameters" />
+			<basic name="sellerConfigParameters" />
+			<basic name="pluginConfig" />
+			<basic name="configured" />
+			<transient name="modelAttributes" />
+			<transient name="nameCurrentLanguageId" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.PaymentPluginConfigModelImpl">
+		<attributes>
+			<id name="paymentPluginConfigId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="sellerId" />
+			<basic name="paymentPluginId" />
+			<basic name="config" />
+			<basic name="configured" />
+			<basic name="defaultPlugin" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.RuleModelImpl">
+		<attributes>
+			<id name="ruleId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="paymentPluginConfigId" />
+			<basic name="content" />
+			<basic name="priority" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.SellerModelImpl">
+		<attributes>
+			<id name="sellerId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.TransactionModelImpl">
+		<attributes>
+			<id name="transactionId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="applicationId" />
+			<basic name="sellerId" />
+			<basic name="amount" />
+			<basic name="currencyCode" />
+			<basic name="status" />
+			<basic name="paymentApplicationId" />
+			<basic name="amountPaid" />
+			<basic name="amountRefunded" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.TransactionLogModelImpl">
+		<attributes>
+			<id name="transactionLogId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="transactionId" />
+			<basic name="paymentApplicationId" />
+			<basic name="remoteId" />
+			<basic name="amount" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.beorn.onlinepayment.model.impl.TransactionParameterModelImpl">
+		<attributes>
+			<id name="transactionParameterId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="groupId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="transactionId" />
+			<basic name="key">
+				<column name="KEY_" />
+			</basic>
+			<basic name="value" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.beorn.onlinepayment.model.impl.OrderTransactionImpl" name="OrderTransaction">
+		<table name="Payment_OrderTransaction" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.PaymentMethodImpl" name="PaymentMethod">
+		<table name="Payment_PaymentMethod" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.PaymentPluginImpl" name="PaymentPlugin">
+		<table name="Payment_PaymentPlugin" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.PaymentPluginConfigImpl" name="PaymentPluginConfig">
+		<table name="Payment_PaymentPluginConfig" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.RuleImpl" name="Rule">
+		<table name="Payment_Rule" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.SellerImpl" name="Seller">
+		<table name="Payment_Seller" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.TransactionImpl" name="Transaction">
+		<table name="Payment_Transaction" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.TransactionLogImpl" name="TransactionLog">
+		<table name="Payment_TransactionLog" />
+		<attributes />
+	</entity>
+	<entity class="com.beorn.onlinepayment.model.impl.TransactionParameterImpl" name="TransactionParameter">
+		<table name="Payment_TransactionParameter" />
+		<attributes />
+	</entity>
+</entity-mappings>

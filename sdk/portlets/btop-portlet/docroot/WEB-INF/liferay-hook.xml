@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.1.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd">
+
+
+<hook>
+	<portal-properties>portal.properties</portal-properties>
+	<custom-jsp-dir>/WEB-INF/custom-jsp</custom-jsp-dir>
+	<custom-jsp-global>true</custom-jsp-global>
+	<struts-action>
+		<struts-action-path>/shopping/checkout</struts-action-path>
+		<struts-action-impl>com.beorn.onlinepayment.shopping.action.BtopCheckoutAction</struts-action-impl>
+	</struts-action>
+	<struts-action>
+		<struts-action-path>/shopping/btop_configuration</struts-action-path>
+		<struts-action-impl>com.beorn.onlinepayment.shopping.action.ConfigurationActionImpl</struts-action-impl>
+	</struts-action>
+	<struts-action>
+		<struts-action-path>/shopping/btop_select_payment_method</struts-action-path>
+		<struts-action-impl>com.beorn.onlinepayment.shopping.action.BtopSelectPaymentMethodAction</struts-action-impl>
+	</struts-action>
+</hook>

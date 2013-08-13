@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+
+<service-builder package-path="com.beorn.onlinepayment">
+	<author>Sebastien Meunier</author>
+	<namespace>Payment</namespace>
+
+	<entity name="Transaction" local-service="true" uuid="true"
+		remote-service="true">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="transactionId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="applicationId" type="String" />
+		<column name="sellerId" type="long" />
+		<column name="amount" type="double" />
+		<column name="currencyCode" type="String" />
+		<column name="status" type="long" />
+
+		<column name="paymentApplicationId" type="String" />
+		<column name="amountPaid" type="double" />
+		<column name="amountRefunded" type="double" />
+
+		<!-- Relationships -->
+
+		<column name="transactionLogs" type="Collection" entity="TransactionLog"
+			mapping-key="transactionId" />
+
+		<column name="transactionParameters" type="Collection"
+			entity="TransactionParameter" mapping-key="transactionId" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="ApplicationId" return-type="Collection">
+			<finder-column name="applicationId" />
+		</finder>
+		<finder name="SellerId" return-type="Collection">
+			<finder-column name="sellerId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ApplicationIdAndSellerId" return-type="Collection">
+			<finder-column name="applicationId" />
+			<finder-column name="sellerId" />
+		</finder>
+		<finder name="ApplicationIdAndUserId" return-type="Collection">
+			<finder-column name="applicationId" />
+			<finder-column name="userId" />
+		</finder>
+	</entity>
+
+	<entity name="TransactionLog" local-service="true" uuid="true"
+		remote-service="false">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="transactionLogId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="transactionId" type="long" />
+		<column name="paymentApplicationId" type="String" />
+		<column name="remoteId" type="String" />
+		<column name="amount" type="double" />
+		<column name="type" type="long" /> <!-- see com.beorn.onlinepayment.util.TransactionLogTypes -->
+
+		<!-- Relationships -->
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="PaymentApplicationId" return-type="Collection">
+			<finder-column name="paymentApplicationId" />
+		</finder>
+		<finder name="PaymentApplicationIdAndRemoteId" return-type="TransactionLog">
+			<finder-column name="paymentApplicationId" />
+			<finder-column name="remoteId" />
+		</finder>
+	</entity>
+
+	<entity name="TransactionParameter" local-service="true" uuid="true"
+		remote-service="false">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="transactionParameterId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="transactionId" type="long" />
+		<column name="key" type="String" />
+		<column name="value" type="String" />
+
+		<!-- Relationships -->
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="TransactionIdAndKey" return-type="TransactionParameter">
+			<finder-column name="transactionId" />
+			<finder-column name="key" />
+		</finder>
+	</entity>
+
+	<entity name="Seller" local-service="true" uuid="true"
+		remote-service="true">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="sellerId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="active" type="boolean" />
+
+		<!-- Relationships -->
+
+		<column name="paymentPluginConfigs" type="Collection" entity="PaymentPluginConfig"
+			mapping-key="sellerId" />
+
+		<column name="transactions" type="Collection" entity="Transaction"
+			mapping-key="sellerId" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="CompanyIdAndName" return-type="Seller" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+
+	<entity name="PaymentMethod" local-service="true" uuid="true"
+		remote-service="true">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="paymentMethodId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="key" type="String" />
+		<column name="name" type="String" localized="true" />
+
+		<!-- Relationships -->
+
+		<column name="paymentPlugins" type="Collection" entity="PaymentPlugin"
+			mapping-table="PaymentPlugin_PaymentMethod" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="Key" return-type="PaymentMethod" unique="true">
+			<finder-column name="key" />
+		</finder>
+	</entity>
+
+	<entity name="PaymentPlugin" local-service="true" uuid="true"
+		remote-service="true">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="paymentPluginId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="applicationId" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="pluginConfigParameters" type="String" />
+		<column name="sellerConfigParameters" type="String" />
+		<column name="pluginConfig" type="String" />
+		<column name="configured" type="boolean" />
+
+		<!-- Relationships -->
+
+		<column name="paymentPluginConfigs" type="Collection" entity="PaymentPluginConfig"
+			mapping-key="paymentPluginId" />
+
+		<column name="paymentMethods" type="Collection" entity="PaymentMethod"
+			mapping-table="PaymentPlugin_PaymentMethod" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="ApplicationId" return-type="PaymentPlugin"
+			unique="true">
+			<finder-column name="applicationId" />
+		</finder>
+	</entity>
+
+	<entity name="PaymentPluginConfig" local-service="true" uuid="true"
+		remote-service="false">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="paymentPluginConfigId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="sellerId" type="long" />
+		<column name="paymentPluginId" type="long" />
+		<column name="config" type="String" /> <!-- JSonObject -->
+		<column name="configured" type="boolean" />
+		<column name="defaultPlugin" type="boolean" />
+
+		<!-- Relationships -->
+
+		<column name="rules" type="Collection" entity="Rule"
+			mapping-key="paymentPluginConfigId" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="paymentPluginId" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="SellerId" return-type="Collection">
+			<finder-column name="sellerId" />
+		</finder>
+		<finder name="PaymentPluginId" return-type="Collection">
+			<finder-column name="paymentPluginId" />
+		</finder>
+		<finder name="SellerIdAndPaymentPluginId" return-type="PaymentPluginConfig"
+			unique="true">
+			<finder-column name="sellerId" />
+			<finder-column name="paymentPluginId" />
+		</finder>
+		<finder name="SellerIdAndDefaultPlugin" return-type="PaymentPluginConfig">
+			<finder-column name="sellerId" />
+			<finder-column name="defaultPlugin" />
+		</finder>
+	</entity>
+
+	<entity name="Rule" local-service="true" uuid="true"
+		remote-service="false">
+
+		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- PK fields -->
+
+		<column name="ruleId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="paymentPluginConfigId" type="long" />
+		<column name="content" type="String" />
+		<column name="priority" type="int" />
+
+		<!-- Relationships -->
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="priority" />
+			<order-column name="paymentPluginConfigId" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="PaymentPluginConfigIdId" return-type="Collection">
+			<finder-column name="paymentPluginConfigId" />
+		</finder>
+	</entity>
+
+	<!-- Liferay shopping hook -->
+	<entity name="OrderTransaction" local-service="true" uuid="true"
+		remote-service="false">
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- PK fields -->
+
+		<column name="orderId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="transactionId" type="long" />
+
+		<!-- Relationships -->
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="orderId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="TransactionId" return-type="OrderTransaction"
+			unique="true">
+			<finder-column name="transactionId" />
+		</finder>
+	</entity>
+
+	<exceptions>
+		<exception>TransactionApplicationId</exception>
+		<exception>TransactionAmount</exception>
+		<exception>TransactionAmountPaid</exception>
+		<exception>TransactionAmountRefunded</exception>
+		<exception>TransactionPaymentApplicationId</exception>
+		<exception>TransactionCurrencyCode</exception>
+		<exception>TransactionStatus</exception>
+		<exception>DuplicateTransactionLog</exception>
+		<exception>TransactionLogType</exception>
+		<exception>TransactionLogPaymentApplicationId</exception>
+		<exception>RequiredSeller</exception>
+		<exception>DuplicateSeller</exception>
+		<exception>SellerName</exception>
+		<exception>RequiredPaymentMethod</exception>
+		<exception>DuplicatePaymentMethod</exception>
+		<exception>PaymentMethodKey</exception>
+		<exception>PaymentMethodName</exception>
+		<exception>DuplicatePaymentPlugin</exception>
+		<exception>PaymentPluginApplicationId</exception>
+		<exception>PaymentPluginName</exception>
+		<exception>DuplicatePaymentPluginConfig</exception>
+
+		<!-- Liferay shopping hook -->
+		<exception>DuplicateOrderTransaction</exception>
+	</exceptions>
+</service-builder>

@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+
+<plugin>
+	<name>
+		<en_US>Paypal payment plugin</en_US>
+		<fr_FR>Plugin de paiement Paypal</fr_FR>
+	</name>
+	<methods>
+		<method>
+			<key>paypal</key>
+			<name>Paypal</name>
+			<class>com.beorn.paypalpaymentplugin.method.PaypalMethodHandler
+			</class>
+		</method>
+	</methods>
+	<pluginConfig>
+		<validatorClass>com.beorn.paypalpaymentplugin.validator.PluginConfigValidator
+		</validatorClass>
+		<group>
+			<key>connection</key>
+			<name>
+				<en_US>Connection Information</en_US>
+				<fr_FR>Informations de connection</fr_FR>
+			</name>
+			<parameter>
+				<key>http.ConnectionTimeOut</key>
+				<name>
+					<en_US>Connection Timeout (in milliseconds)</en_US>
+					<fr_FR>Temps avant échec de connection (en millisecondes)</fr_FR>
+				</name>
+				<type>number</type>
+				<default>5000</default>
+			</parameter>
+			<parameter>
+				<key>http.ReadTimeOut</key>
+				<name>
+					<en_US>Connection Read Timeout (in milliseconds)</en_US>
+					<fr_FR>Temps avant échec de lecture (en millisecondes)</fr_FR>
+				</name>
+				<type>number</type>
+				<default>30000</default>
+			</parameter>
+			<parameter>
+				<key>http.Retry</key>
+				<name>
+					<en_US>Connection retry</en_US>
+					<fr_FR>Nombre de tentatives de connexion</fr_FR>
+				</name>
+				<type>number</type>
+				<default>2</default>
+			</parameter>
+			<parameter>
+				<key>http.MaxConnection</key>
+				<name>
+					<en_US>Maximum connection count</en_US>
+					<fr_FR>Nombre connexions maximal</fr_FR>
+				</name>
+				<type>number</type>
+				<default>100</default>
+			</parameter>
+			<parameter>
+				<key>http.IPAddress</key>
+				<name>
+					<en_US>IP address</en_US>
+					<fr_FR>Adresse Ip</fr_FR>
+				</name>
+				<type>text</type>
+				<default>127.0.0.1</default>
+			</parameter>
+		</group>
+		<group>
+			<key>proxy</key>
+			<name>Proxy</name>
+			<parameter>
+				<key>http.UseProxy</key>
+				<name>
+					<en_US>Use a HTTP Proxy</en_US>
+					<fr_FR>Utiliser un proxy Http</fr_FR>
+				</name>
+				<type>boolean</type>
+				<default>false</default>
+			</parameter>
+			<parameter>
+				<key>http.ProxyPort</key>
+				<name>
+					<en_US>Proxy port</en_US>
+					<fr_FR>Port</fr_FR>
+				</name>
+				<type>number</type>
+				<default>8080</default>
+			</parameter>
+			<parameter>
+				<key>http.ProxyHost</key>
+				<name>
+					<en_US>Proxy host</en_US>
+					<fr_FR>Adresse Ip</fr_FR>
+				</name>
+				<type>text</type>
+				<default>127.0.0.1</default>
+			</parameter>
+			<parameter>
+				<key>http.ProxyUserName</key>
+				<name>
+					<en_US>Proxy username</en_US>
+					<fr_FR>Nom d'utilisateur</fr_FR>
+				</name>
+				<type>text</type>
+				<default>null</default>
+			</parameter>
+			<parameter>
+				<key>http.ProxyPassword</key>
+				<name>
+					<en_US>Proxy password</en_US>
+					<fr_FR>Mot de passe</fr_FR>
+				</name>
+				<type>text</type>
+				<default>null</default>
+			</parameter>
+		</group>
+		<group>
+			<key>service</key>
+			<name>
+				<en_US>Service Configuration (Production)</en_US>
+				<fr_FR>Configuration du service (Production)</fr_FR>
+			</name>
+			<parameter>
+				<key>mode</key>
+				<name>
+					<en_US>Live mode</en_US>
+					<fr_FR>Mode Live</fr_FR>
+				</name>
+				<type>hidden</type>
+				<default>live</default>
+			</parameter>
+			<parameter>
+				<key>service.RedirectURL</key>
+				<name>
+					<en_US>Service redirect URL</en_US>
+					<fr_FR>Url de redirection du service</fr_FR>
+				</name>
+				<type>url</type>
+				<default>https://www.paypal.com/cgi-bin/webscr&amp;cmd=</default>
+			</parameter>
+			<parameter>
+				<key>paymentDomain</key>
+				<name>
+					<en_US>Payment domain</en_US>
+					<fr_FR>Nom de domaine du serveur de paiement</fr_FR>
+				</name>
+				<type>url</type>
+				<default>https://www.paypal.com</default>
+			</parameter>
+		</group>
+		<group>
+			<key>serviceSandbox</key>
+			<name>
+				<en_US>Service Configuration (Sandbox)</en_US>
+				<fr_FR>Configuration du service (Sandbox)</fr_FR>
+			</name>
+			<parameter>
+				<key>mode</key>
+				<name>
+					<en_US>Sandbox mode</en_US>
+					<fr_FR>Mode Sandbox</fr_FR>
+				</name>
+				<type>hidden</type>
+				<default>sandbox</default>
+			</parameter>
+			<parameter>
+				<key>service.RedirectURL</key>
+				<name>
+					<en_US>Service redirect URL</en_US>
+					<fr_FR>Url de redirection du service</fr_FR>
+				</name>
+				<type>url</type>
+				<default>https://www.sandbox.paypal.com/webscr&amp;cmd=</default>
+			</parameter>
+			<parameter>
+				<key>paymentDomain</key>
+				<name>
+					<en_US>Payment domain</en_US>
+					<fr_FR>Nom de domaine du serveur de paiement</fr_FR>
+				</name>
+				<type>url</type>
+				<default>https://www.sandbox.paypal.com</default>
+			</parameter>
+		</group>
+		<group>
+			<key>misc</key>
+			<name>
+				<en_US>Misc.</en_US>
+				<fr_FR>Divers</fr_FR>
+			</name>
+			<parameter>
+				<key>http.GoogleAppEngine</key>
+				<name>Google AppEngine</name>
+				<type>boolean</type>
+				<default>false</default>
+				<helpMessage>
+					<en_US>Check this if you are using the PayPal SDK within a Google
+						App Engine java app
+					</en_US>
+					<fr_FR>Cocher cette case si vous utilisez le SDK PayPal dans un
+						contexte Google App Engine
+					</fr_FR>
+				</helpMessage>
+			</parameter>
+			<parameter>
+				<key>service.DevCentralURL</key>
+				<name>
+					<en_US>Service dev central URL</en_US>
+					<fr_FR>Url du service de dévelloppement</fr_FR>
+				</name>
+				<type>url</type>
+				<default>https://developer.paypal.com</default>
+			</parameter>
+		</group>
+	</pluginConfig>
+	<sellerConfig>
+		<validatorClass>com.beorn.paypalpaymentplugin.validator.SellerConfigValidator
+		</validatorClass>
+		<group>
+			<key>account</key>
+			<name>
+				<en_US>Account</en_US>
+				<fr_FR>Compte</fr_FR>
+			</name>
+			<parameter>
+				<key>acct1.UserName</key>
+				<name>
+					<en_US>User name</en_US>
+					<fr_FR>Nom d'utilisateur</fr_FR>
+				</name>
+				<type>text</type>
+			</parameter>
+			<parameter>
+				<key>acct1.Password</key>
+				<name>
+					<en_US>Password</en_US>
+					<fr_FR>Mot de passe</fr_FR>
+				</name>
+				<type>password</type>
+			</parameter>
+			<parameter>
+				<key>acct1.Signature</key>
+				<name>Signature</name>
+				<type>text</type>
+			</parameter>
+			<parameter>
+				<key>acct1.AppId</key>
+				<name>
+					<en_US>Application id</en_US>
+					<fr_FR>Identifiant d'application</fr_FR>
+				</name>
+				<type>text</type>
+			</parameter>
+			<parameter>
+				<key>acct1.Subject</key>
+				<name>
+					<en_US>Subject</en_US>
+					<fr_FR>Sujet</fr_FR>
+				</name>
+				<type>text</type>
+				<helpMessage>
+					<en_US>Subject is optional, only required in case of third party
+						permission
+					</en_US>
+					<fr_FR>Optionnel, n'est nécessaire qu'en cas de permission sur un
+						compte tiers
+					</fr_FR>
+				</helpMessage>
+			</parameter>
+		</group>
+		<group>
+			<key>misc</key>
+			<name>
+				<en_US>Misc.</en_US>
+				<fr_FR>Divers</fr_FR>
+			</name>
+			<parameter>
+				<key>useSandbox</key>
+				<name>
+					<en_US>Use sandbox</en_US>
+					<fr_FR>Utiliser la Sandbox</fr_FR>
+				</name>
+				<type>boolean</type>
+				<default>true</default>
+			</parameter>
+		</group>
+	</sellerConfig>
+</plugin>

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.PaymentPluginFinder.findBySellerId">
+      <![CDATA[
+			SELECT
+				{Payment_PaymentPlugin.*}
+			FROM
+				Payment_PaymentPluginConfig,
+				Payment_PaymentPlugin
+			WHERE
+				(Payment_PaymentPluginConfig.sellerId = ?) AND
+				(Payment_PaymentPluginConfig.configured = ?) AND
+				(Payment_PaymentPlugin.configured = ?) AND
+				(Payment_PaymentPluginConfig.paymentPluginId = Payment_PaymentPlugin.paymentPluginId)
+ 			ORDER BY
+				Payment_PaymentPlugin.paymentPluginId DESC
+      ]]>
+	</sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.PaymentPluginFinder.countBySellerId">
+      <![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				Payment_PaymentPluginConfig,
+				Payment_PaymentPlugin
+			WHERE
+				(Payment_PaymentPluginConfig.sellerId = ?) AND
+				(Payment_PaymentPluginConfig.configured = ?) AND
+				(Payment_PaymentPlugin.configured = ?) AND
+				(Payment_PaymentPluginConfig.paymentPluginId = Payment_PaymentPlugin.paymentPluginId)
+      ]]>
+	</sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.PaymentPluginFinder.findByTransactionIdAndPaymentMethodId">
+      <![CDATA[
+			SELECT
+				{Payment_PaymentPlugin.*}
+			FROM
+				Payment_Transaction,
+				Payment_PaymentPluginConfig,
+				Payment_PaymentPlugin_PaymentMethod,
+				Payment_PaymentPlugin
+			WHERE
+				(Payment_Transaction.transactionId = ?) AND
+				(Payment_PaymentPlugin_PaymentMethod.paymentMethodId = ?) AND
+				(Payment_PaymentPluginConfig.configured = ?) AND
+				(Payment_PaymentPlugin.configured = ?) AND
+				(Payment_Transaction.sellerId = Payment_PaymentPluginConfig.sellerId) AND
+				(Payment_PaymentPluginConfig.paymentPluginId = Payment_PaymentPlugin.paymentPluginId) AND
+				(Payment_PaymentPlugin.paymentPluginId = Payment_PaymentPlugin_PaymentMethod.paymentPluginId)
+ 			ORDER BY
+				Payment_PaymentPlugin.paymentPluginId DESC
+      ]]>
+	</sql>
+	<sql
+		id="com.beorn.onlinepayment.service.persistence.PaymentPluginFinder.countByTransactionIdAndPaymentMethodId">
+      <![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				Payment_Transaction,
+				Payment_PaymentPluginConfig,
+				Payment_PaymentPlugin_PaymentMethod,
+				Payment_PaymentPlugin
+			WHERE
+				(Payment_Transaction.transactionId = ?) AND
+				(Payment_PaymentPlugin_PaymentMethod.paymentMethodId = ?) AND
+				(Payment_PaymentPluginConfig.configured = ?) AND
+				(Payment_PaymentPlugin.configured = ?) AND
+				(Payment_Transaction.sellerId = Payment_PaymentPluginConfig.sellerId) AND
+				(Payment_PaymentPluginConfig.paymentPluginId = Payment_PaymentPlugin.paymentPluginId) AND
+				(Payment_PaymentPlugin.paymentPluginId = Payment_PaymentPlugin_PaymentMethod.paymentPluginId)
+      ]]>
+	</sql>
+</custom-sql>

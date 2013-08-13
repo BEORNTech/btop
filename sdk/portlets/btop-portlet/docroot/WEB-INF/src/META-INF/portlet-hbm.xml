@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.beorn.onlinepayment.model.OrderTransaction" />
+	<import class="com.beorn.onlinepayment.model.PaymentMethod" />
+	<import class="com.beorn.onlinepayment.model.PaymentPlugin" />
+	<import class="com.beorn.onlinepayment.model.PaymentPluginConfig" />
+	<import class="com.beorn.onlinepayment.model.Rule" />
+	<import class="com.beorn.onlinepayment.model.Seller" />
+	<import class="com.beorn.onlinepayment.model.Transaction" />
+	<import class="com.beorn.onlinepayment.model.TransactionLog" />
+	<import class="com.beorn.onlinepayment.model.TransactionParameter" />
+	<class name="com.beorn.onlinepayment.model.impl.OrderTransactionImpl" table="Payment_OrderTransaction">
+		<cache usage="read-write" />
+		<id name="orderId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="transactionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.PaymentMethodImpl" table="Payment_PaymentMethod">
+		<cache usage="read-write" />
+		<id name="paymentMethodId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.PaymentPluginImpl" table="Payment_PaymentPlugin">
+		<cache usage="read-write" />
+		<id name="paymentPluginId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="applicationId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="pluginConfigParameters" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sellerConfigParameters" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="pluginConfig" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="configured" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.PaymentPluginConfigImpl" table="Payment_PaymentPluginConfig">
+		<cache usage="read-write" />
+		<id name="paymentPluginConfigId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="sellerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="paymentPluginId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="config" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="configured" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="defaultPlugin" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.RuleImpl" table="Payment_Rule">
+		<cache usage="read-write" />
+		<id name="ruleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="paymentPluginConfigId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.SellerImpl" table="Payment_Seller">
+		<cache usage="read-write" />
+		<id name="sellerId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.TransactionImpl" table="Payment_Transaction">
+		<cache usage="read-write" />
+		<id name="transactionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="applicationId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sellerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="amount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="currencyCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="paymentApplicationId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="amountPaid" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="amountRefunded" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.TransactionLogImpl" table="Payment_TransactionLog">
+		<cache usage="read-write" />
+		<id name="transactionLogId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="transactionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="paymentApplicationId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="remoteId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="amount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.LongType" column="type_" />
+	</class>
+	<class name="com.beorn.onlinepayment.model.impl.TransactionParameterImpl" table="Payment_TransactionParameter">
+		<cache usage="read-write" />
+		<id name="transactionParameterId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="transactionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
+		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="btop-portlet" basedir="." default="deploy" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../build-common-portlet.xml" />
+
+	<target name="test">
+		<!-- Adds jmockit.jar to test target -->
+		<mkdir dir="docroot/WEB-INF/lib" />
+		<!-- jmockit.jar,powermock-mockito.jar,mockito.jar,javassist.jar -->
+		<copy todir="docroot/WEB-INF/lib">
+			<fileset dir="test/lib" includes="jmockit.jar" />
+		</copy>
+		<antcall target="build-common-plugin.test" />
+		<delete>
+			<fileset dir="docroot/WEB-INF/lib" includes="jmockit.jar" />
+		</delete>
+	</target>
+
+	<target name="api-libs-all">
+		<antcall target="api-libs-clean" />
+		<antcall target="api-libs-deploy" />
+	</target>
+
+	<target name="api-libs-clean">
+		<delete dir="docroot/WEB-INF/classes-api" />
+		<delete dir="docroot/WEB-INF/classes-app-api" />
+		<delete dir="docroot/WEB-INF/classes-plugin-api" />
+		<if>
+			<available file="docroot/WEB-INF/lib" />
+			<then>
+				<delete>
+					<fileset dir="docroot/WEB-INF/lib" includes="payment-api.jar,payment-app-api.jar,payment-plugin-api.jar" />
+				</delete>
+			</then>
+		</if>
+	</target>
+
+	<target name="api-libs-compile">
+		<mkdir dir="docroot/WEB-INF/lib" />
+		<mkdir dir="docroot/WEB-INF/src-api" />
+		<mkdir dir="docroot/WEB-INF/src-app-api" />
+		<mkdir dir="docroot/WEB-INF/src-plugin-api" />
+
+		<path id="common-api.classpath">
+			<fileset dir="${app.server.lib.global.dir}" includes="*.jar" />
+			<fileset dir="${project.dir}/lib" includes="activation.jar,jsp-api.jar,mail.jar,servlet-api.jar" />
+			<fileset dir="docroot/WEB-INF/lib" excludes="payment-api.jar,payment-app-api.jar,payment-plugin-api.jar,btop-portlet-service.jar" includes="*.jar" />
+		</path>
+
+		<mkdir dir="docroot/WEB-INF/classes-api" />
+		<copy todir="docroot/WEB-INF/classes-api">
+			<fileset dir="docroot/WEB-INF/src-api" excludes="**/*.java" />
+		</copy>
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="common-api.classpath" />
+			<param name="javac.destdir" value="docroot/WEB-INF/classes-api" />
+			<param name="javac.srcdir" value="docroot/WEB-INF/src-api" />
+			<reference refid="common-api.classpath" torefid="common-api.classpath" />
+		</antcall>
+		<zip basedir="docroot/WEB-INF/classes-api" destfile="docroot/WEB-INF/lib/payment-api.jar" />
+		<delete dir="docroot/WEB-INF/classes-api" />
+
+		<path id="api.classpath">
+			<fileset dir="${app.server.lib.global.dir}" includes="*.jar" />
+			<fileset dir="${project.dir}/lib" includes="activation.jar,jsp-api.jar,mail.jar,servlet-api.jar" />
+			<fileset dir="docroot/WEB-INF/lib" excludes="payment-app-api.jar,payment-plugin-api.jar,btop-portlet-service.jar" includes="*.jar" />
+		</path>
+
+		<mkdir dir="docroot/WEB-INF/classes-app-api" />
+		<copy todir="docroot/WEB-INF/classes-app-api">
+			<fileset dir="docroot/WEB-INF/src-app-api" excludes="**/*.java" />
+		</copy>
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="api.classpath" />
+			<param name="javac.destdir" value="docroot/WEB-INF/classes-app-api" />
+			<param name="javac.srcdir" value="docroot/WEB-INF/src-app-api" />
+			<reference refid="api.classpath" torefid="api.classpath" />
+		</antcall>
+		<zip basedir="docroot/WEB-INF/classes-app-api" destfile="docroot/WEB-INF/lib/payment-app-api.jar" />
+		<delete dir="docroot/WEB-INF/classes-app-api" />
+
+		<mkdir dir="docroot/WEB-INF/classes-plugin-api" />
+		<copy todir="docroot/WEB-INF/classes-plugin-api">
+			<fileset dir="docroot/WEB-INF/src-plugin-api" excludes="**/*.java" />
+		</copy>
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="api.classpath" />
+			<param name="javac.destdir" value="docroot/WEB-INF/classes-plugin-api" />
+			<param name="javac.srcdir" value="docroot/WEB-INF/src-plugin-api" />
+			<reference refid="api.classpath" torefid="api.classpath" />
+		</antcall>
+		<zip basedir="docroot/WEB-INF/classes-plugin-api" destfile="docroot/WEB-INF/lib/payment-plugin-api.jar" />
+		<delete dir="docroot/WEB-INF/classes-plugin-api" />
+	</target>
+
+	<target name="api-libs-deploy" depends="api-libs-compile">
+		<for param="module.name">
+			<path>
+				<dirset dir="${project.dir}/portlets" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+				<dirset dir="${project.dir}/hooks" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+				<dirset dir="${project.dir}/webs" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{module.name}" property="module.name.unix">
+					<antelope:replace regex="\\" replacement="/" />
+				</antelope:stringutil>
+
+				<antelope:grep in="${module.name.unix}" regex="(.*/)(.*)" group="2" property="module.name" />
+				<antelope:grep in="${module.name.unix}" regex="(.*)" group="1" property="module.path" />
+
+				<if>
+					<available file="${module.path}/docroot/WEB-INF/payment-app.xml" />
+					<then>
+						<copy todir="${module.path}/docroot/WEB-INF/lib" overwrite="true">
+							<fileset dir="docroot/WEB-INF/lib" includes="payment-api.jar,payment-app-api.jar,activemq-all-*.jar" />
+						</copy>
+					</then>
+				</if>
+				<if>
+					<available file="${module.path}/docroot/WEB-INF/payment-plugin.xml" />
+					<then>
+						<copy todir="${module.path}/docroot/WEB-INF/lib" overwrite="true">
+							<fileset dir="docroot/WEB-INF/lib" includes="payment-api.jar,payment-plugin-api.jar,activemq-all-*.jar" />
+						</copy>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+</project>

@@ -1,0 +1,84 @@
+<%--
+/**
+ * Copyright (c) 2007-2013 BEORN Technologies, SARL. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+--%>
+
+<%@page import="com.liferay.portal.kernel.util.GetterUtil"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
+<%@page import="com.liferay.portal.kernel.json.JSONFactoryUtil"%>
+<%@page import="com.liferay.portal.kernel.json.JSONObject"%>
+<%@page import="com.beorn.onlinepayment.config.ConfigUtil"%>
+<%@page import="com.beorn.paymentpluginapi.config.ConfigParameter"%>
+<%@page import="com.beorn.paymentpluginapi.config.ConfigGroup"%>
+<%@page import="com.beorn.paymentpluginapi.config.ConfigDescription"%>
+<%@page import="com.beorn.paymentpluginapi.config.ConfigDescriptionUtil"%>
+
+<div class="dynamic-config">
+	<%
+		if (Validator.isNotNull(dynamicConfigXml)) {
+			ConfigDescription configDescription = ConfigDescriptionUtil.parseConfigDescription(dynamicConfigXml);
+	
+			JSONObject existingConfig = null;
+			if (Validator.isNotNull(dynamicConfig))
+				existingConfig = JSONFactoryUtil.createJSONObject(dynamicConfig);
+	
+			for (ConfigGroup configGroup : configDescription.getConfigGroups()) {
+				JSONObject groupConfiguration = null;
+				if (existingConfig != null && existingConfig.has(configGroup.getKey()))
+					groupConfiguration = existingConfig.getJSONObject(configGroup.getKey());
+	%>
+		<aui:fieldset label="<%= configGroup.getName(locale) %>">
+			<%
+				for (ConfigParameter configParameter : configGroup.getConfigParameters()) {
+					String parameterName = ConfigUtil.getParameterName(configGroup.getKey(), configParameter.getKey());
+					String value = ParamUtil.getString(request, parameterName, 
+							groupConfiguration != null ? groupConfiguration.getString(configParameter.getKey(), 
+									configParameter.getDefault()) : configParameter.getDefault());
+	
+					String fieldType = configParameter.getType();
+			%>
+				<c:choose>
+					<c:when test='<%= fieldType.equals("boolean") %>'>
+						<aui:input 
+							name="<%= parameterName %>"
+							label="<%= configParameter.getName(locale) %>" 
+							type="checkbox"
+							helpMessage="<%= configParameter.getHelpMessage(locale) %>" 
+							checked="<%= GetterUtil.getBoolean(value) %>" 
+						/>
+					</c:when>
+					<c:otherwise>
+						<aui:input 
+							name="<%= parameterName %>"
+							label="<%= configParameter.getName(locale) %>" 
+							type="<%= fieldType %>"
+							helpMessage="<%= configParameter.getHelpMessage(locale) %>" 
+							value="<%= value %>" 
+						/>
+					</c:otherwise>
+				</c:choose>
+			<%
+				}
+			%>
+		</aui:fieldset>
+	<%
+			}
+		}
+	%>
+</div>

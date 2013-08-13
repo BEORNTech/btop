@@ -1,0 +1,14 @@
+.metadata/
+bundles/
+portal/
+Servers/
+classes/
+themes/
+!themes/*/_diffs/
+!themes/*/WEB-INF/
+test-results/
+*.class
+*.sass-cache
+payment-api.jar
+payment-app-api.jar
+payment-plugin-api.jar

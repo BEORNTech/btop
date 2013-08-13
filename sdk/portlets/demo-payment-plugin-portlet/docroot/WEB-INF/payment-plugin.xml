@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<plugin>
+	<name>
+		<en_US>Demo payment plugin</en_US>
+		<fr_FR>Plugin de paiement de démo</fr_FR>
+	</name>
+	<methods>
+		<method>
+			<key>demo</key>
+			<name>Carte demo</name>
+			<class>com.beorn.demopaymentplugin.method.DemoCardMethodHandler</class>
+		</method>
+	</methods>
+</plugin>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.beorn.onlinepayment.service.OrderTransactionLocalService" class="com.beorn.onlinepayment.service.impl.OrderTransactionLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.OrderTransactionPersistence" class="com.beorn.onlinepayment.service.persistence.OrderTransactionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.PaymentMethodLocalService" class="com.beorn.onlinepayment.service.impl.PaymentMethodLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.PaymentMethodService" class="com.beorn.onlinepayment.service.impl.PaymentMethodServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.PaymentMethodPersistence" class="com.beorn.onlinepayment.service.persistence.PaymentMethodPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.persistence.PaymentMethodFinder" class="com.beorn.onlinepayment.service.persistence.PaymentMethodFinderImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.PaymentPluginLocalService" class="com.beorn.onlinepayment.service.impl.PaymentPluginLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.PaymentPluginService" class="com.beorn.onlinepayment.service.impl.PaymentPluginServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.PaymentPluginPersistence" class="com.beorn.onlinepayment.service.persistence.PaymentPluginPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.persistence.PaymentPluginFinder" class="com.beorn.onlinepayment.service.persistence.PaymentPluginFinderImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.PaymentPluginConfigLocalService" class="com.beorn.onlinepayment.service.impl.PaymentPluginConfigLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.PaymentPluginConfigPersistence" class="com.beorn.onlinepayment.service.persistence.PaymentPluginConfigPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.RuleLocalService" class="com.beorn.onlinepayment.service.impl.RuleLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.RulePersistence" class="com.beorn.onlinepayment.service.persistence.RulePersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.persistence.RuleFinder" class="com.beorn.onlinepayment.service.persistence.RuleFinderImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.SellerLocalService" class="com.beorn.onlinepayment.service.impl.SellerLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.SellerService" class="com.beorn.onlinepayment.service.impl.SellerServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.SellerPersistence" class="com.beorn.onlinepayment.service.persistence.SellerPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.persistence.SellerFinder" class="com.beorn.onlinepayment.service.persistence.SellerFinderImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.TransactionLocalService" class="com.beorn.onlinepayment.service.impl.TransactionLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.TransactionService" class="com.beorn.onlinepayment.service.impl.TransactionServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.TransactionPersistence" class="com.beorn.onlinepayment.service.persistence.TransactionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.persistence.TransactionFinder" class="com.beorn.onlinepayment.service.persistence.TransactionFinderImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.TransactionLogLocalService" class="com.beorn.onlinepayment.service.impl.TransactionLogLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.TransactionLogPersistence" class="com.beorn.onlinepayment.service.persistence.TransactionLogPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.TransactionParameterLocalService" class="com.beorn.onlinepayment.service.impl.TransactionParameterLocalServiceImpl" />
+	<bean id="com.beorn.onlinepayment.service.persistence.TransactionParameterPersistence" class="com.beorn.onlinepayment.service.persistence.TransactionParameterPersistenceImpl" parent="basePersistence" />
+	<bean id="com.beorn.onlinepayment.service.persistence.TransactionParameterFinder" class="com.beorn.onlinepayment.service.persistence.TransactionParameterFinderImpl" parent="basePersistence" />
+</beans>

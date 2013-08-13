@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<plugin>
+	<notification-listener-class>com.beorn.onlinepayment.shopping.notification.NotificationListenerImpl
+	</notification-listener-class>
+</plugin>

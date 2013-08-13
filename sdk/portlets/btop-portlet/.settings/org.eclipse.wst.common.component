@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="btop-portlet">
+        <wb-resource deploy-path="/" source-path="/docroot" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src-plugin-api"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/service"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src-app-api"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src-api"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test/integration"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test/unit"/>
+        <property name="java-output-path" value="/btop-portlet/build/classes"/>
+        <property name="context-root" value="btop-portlet"/>
+    </wb-module>
+</project-modules>

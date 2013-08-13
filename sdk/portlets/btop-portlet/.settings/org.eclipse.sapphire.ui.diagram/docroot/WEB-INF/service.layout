@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram-geometry>
+    <grid>
+        <visible>true</visible>
+    </grid>
+    <guides>
+        <visible>false</visible>
+    </guides>
+    <node>
+        <id>Entity#Transaction</id>
+        <bounds x="1650" y="50"/>
+    </node>
+    <node>
+        <id>Entity#TransactionLog</id>
+        <bounds x="1750" y="50"/>
+    </node>
+    <node>
+        <id>Entity#Seller</id>
+        <bounds x="1850" y="50"/>
+    </node>
+    <node>
+        <id>Entity#PaymentMethod</id>
+        <bounds x="1950" y="50"/>
+    </node>
+    <node>
+        <id>Entity#PaymentPlugin</id>
+        <bounds x="2050" y="50"/>
+    </node>
+    <node>
+        <id>Entity#PaymentPluginConfig</id>
+        <bounds x="2150" y="50"/>
+    </node>
+</diagram-geometry>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+
+<service-builder package-path="com.beorn.paypalpaymentplugin">
+	<author>Sebastien Meunier</author>
+	<namespace>PaypalPaymentPlugin</namespace>
+
+	<entity name="Token" local-service="true" uuid="true"
+		remote-service="false">
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- PK fields -->
+
+		<column name="tokenId" type="String" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="transactionId" type="long" />
+		<column name="status" type="long" />
+
+		<!-- Relationships -->
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="transactionId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="TransactionId" return-type="Collection">
+			<finder-column name="transactionId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+	</entity>
+
+	<exceptions>
+		<exception>DuplicateToken</exception>
+		<exception>TokenTransactionId</exception>
+	</exceptions>
+</service-builder>
